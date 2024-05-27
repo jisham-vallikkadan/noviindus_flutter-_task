@@ -1,12 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:noviindus_machine_test/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../common_widgets/custom_button.dart';
 import '../../common_widgets/custom_textfield.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  late TextEditingController? passwordCtrl;
+
+  late TextEditingController? emailCtrl;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    passwordCtrl = TextEditingController();
+    emailCtrl = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    passwordCtrl?.dispose();
+    emailCtrl?.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -65,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           CustomTextField(
-                            // controller: TextEditingController(),
+                            controller: emailCtrl,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Enter email ";
@@ -84,6 +113,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           CustomTextField(
+                            controller: passwordCtrl,
                             hintText: "Enter password",
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -96,16 +126,20 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          CustomButton(
-                            text: "Login",
-                            onPress: () {
-                              if (_formKey.currentState!.validate()) {
-                                print('sucess');
-                              } else {
-                                print('qqqq');
-                              }
-                            },
-                          ),
+                          Consumer<AuthProvider>(builder: (context, login, _) {
+                            return CustomButton(
+                              isLoading: login.isLoading,
+                              text: "Login",
+                              onPress: () {
+                                if (_formKey.currentState!.validate()) {
+                                  login.login(
+                                      context: context,
+                                      password: passwordCtrl!.text,
+                                      email: emailCtrl!.text);
+                                }
+                              },
+                            );
+                          }),
                           SizedBox(
                             height: 100.h,
                           ),
