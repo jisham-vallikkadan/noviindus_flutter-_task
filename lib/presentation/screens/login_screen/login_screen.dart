@@ -113,6 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           CustomTextField(
+                            isPasswordType: true,
+                            maxLine: 1,
                             controller: passwordCtrl,
                             hintText: "Enter password",
                             validator: (val) {

@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:noviindus_machine_test/model/patientList_model.dart';
@@ -5,9 +7,13 @@ import 'package:noviindus_machine_test/presentation/common_widgets/custom_button
 import 'package:noviindus_machine_test/presentation/screens/registation_screen/widgets/treatments.dart';
 import 'package:noviindus_machine_test/provider/Patient_provider.dart';
 import 'package:noviindus_machine_test/utils/toast_util.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import '../../../model/treatment_list_model.dart';
+import '../../../service/pdf_service.dart';
 import '../../common_widgets/field_widgets.dart';
 
 class RegisterPatient extends StatefulWidget {
@@ -36,6 +42,8 @@ class _RegisterPatientState extends State<RegisterPatient> {
   }
 
   final _formKey = GlobalKey<FormState>();
+
+  final PdfService pdfService = PdfService();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -180,8 +188,8 @@ class _RegisterPatientState extends State<RegisterPatient> {
                       scrollDirection: Axis.horizontal,
                       heading: "Payment Option",
                       groupValue: register.paymentOption,
-                      value: ['Cash', 'Card', 'UPI'],
-                      valueNames: ['Cash', 'Card', 'UPI'],
+                      value: const ['Cash', 'Card', 'UPI'],
+                      valueNames: const ['Cash', 'Card', 'UPI'],
                       onChanged: (va) {
                         register.paymentOption = va;
                         register.notifyListeners();

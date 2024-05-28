@@ -75,8 +75,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isPasswordType ? _obscureText : false,
       decoration: InputDecoration(
           errorMaxLines: 4,
-          // errorStyle: const TextStyle(fontSize: 0.01),
-          // errorStyle: CustomFontStyle().common(fontSize: 10),
           counter: const SizedBox.shrink(),
           fillColor: widget.fillColor,
           filled: widget.filled ? true : false,
@@ -88,7 +86,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
             color: Colors.green,
             fontSize: 14.sp,
             fontWeight: FontWeight.w300,
-            // height: 0.12,
           ),
           hintStyle: widget.hintStyle ??
               TextStyle(
@@ -99,7 +96,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
           suffix: InkWell(
               onTap: widget.onTapSuffix, child: Text(widget.sufixText ?? "")),
-          // suffixText: widget.sufixText,
           suffixIconConstraints: BoxConstraints(maxHeight: 65.h),
           prefixIcon: widget.prefixIcon,
           suffixIcon: Padding(

@@ -22,7 +22,6 @@ class _PatientListScreenState extends State<PatientListScreen> {
     Provider.of<PatientProvider>(context, listen: false)
         .fetchPatientList(context: context);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +120,7 @@ class _PatientListScreenState extends State<PatientListScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "$index.",
+                                              "${index + 1}.",
                                               style: TextStyle(
                                                 color: const Color(0xFF404040),
                                                 fontSize: 16.sp,
@@ -249,7 +248,13 @@ class _PatientListScreenState extends State<PatientListScreen> {
                                   ),
                               itemCount:
                                   patient.patientList?.patient?.length ?? 0)
-                          : Text('no patiem'),
+                          : Column(
+                              children: [
+                                Image.asset(
+                                    'assets/images/no_patients_image.jpg'),
+                                const Text('No Patients Avilabel'),
+                              ],
+                            ),
                 )
               ],
             ),

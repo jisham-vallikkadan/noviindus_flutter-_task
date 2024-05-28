@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:noviindus_machine_test/model/treatment_list_model.dart';
@@ -10,8 +9,10 @@ import '../model/branch_list_model.dart';
 import '../model/patientList_model.dart';
 import '../model/tremnetSelection_model.dart';
 import '../service/auth_service.dart';
+import '../service/pdf_service.dart';
 
 class PatientProvider with ChangeNotifier {
+  final PdfService pdfService = PdfService();
   bool isLoading = false;
   PatientListModel? patientList;
   late TextEditingController? nameCtrl;
@@ -61,11 +62,13 @@ class PatientProvider with ChangeNotifier {
   fetchPatientList({
     required BuildContext context,
   }) async {
-    isLoading = true;
-    notifyListeners();
-    patientList = (await PatientService().getPatientList(
+    if (patientList != null) {
+      isLoading = true;
+      notifyListeners();
+    }
+    patientList = await PatientService().getPatientList(
       context: context,
-    ))!;
+    );
     print('----${jsonEncode(patientList)}');
     isLoading = false;
     notifyListeners();
@@ -231,14 +234,15 @@ class PatientProvider with ChangeNotifier {
     String? branch,
   }) async {
     isLoadingRegister = true;
-    print('[---------$male');
-    print('[---------$female');
-    print('[---------$treatments');
+    print('---------$male');
+    print('---------$female');
+    print('---------$treatments');
     print(branch);
     print('$dateAndTime-----$hour-----$minits');
-    String date = '${dateAndTime}-${hour}:${minits} AM';
+    String date = '$dateAndTime-$hour:$minits AM';
     print(date);
     notifyListeners();
+
     var respoce = await AuthService().register(
       context: context,
       treatments: treatments,
@@ -256,10 +260,22 @@ class PatientProvider with ChangeNotifier {
       totalamount: totalamountCtrl?.text,
     );
 
-    print('---------$respoce');
-
     if (respoce['status'] == true) {
       ToastUtil.show(respoce['message']);
+      final data = await pdfService.generatePdf(
+          name: nameCtrl!.text,
+          totalamount: totalamountCtrl?.text,
+          phone: phoneCtrl?.text,
+          address: addressCtrl?.text,
+          advanve: advanceAmountCtrl?.text,
+          balance: balanceAmountCtrl?.text,
+          discount: discountAmountCtrl?.text,
+          tretmentList: selectedTretment,
+          date: dateAndTime,
+          time: '$hour:$minits ');
+      pdfService.savefile('test', data);
+      Navigator.pop(context);
+      fetchPatientList(context: context);
     } else {
       ToastUtil.show(respoce['message']);
     }

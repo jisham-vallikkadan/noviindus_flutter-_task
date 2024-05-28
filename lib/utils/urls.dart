@@ -9,6 +9,4 @@ class Urls{
     static String treatmentListUrl = "$baseurl/TreatmentList";
     static String registerUrl = "$baseurl/PatientUpdate";
 
-
-
 }

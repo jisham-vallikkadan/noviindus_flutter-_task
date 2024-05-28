@@ -30,7 +30,7 @@ class AuthProvider with ChangeNotifier {
           keyAccessToken, loginData!.token.toString());
       ToastUtil.show(loginData!.message.toString());
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => PatientListScreen()));
+          MaterialPageRoute(builder: (context) =>const PatientListScreen()));
     } else {
       ToastUtil.show(loginData!.message.toString());
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'custom_textfield.dart';
 
 class Register extends StatelessWidget {
@@ -14,7 +13,6 @@ class Register extends StatelessWidget {
     int? maxLength,
     TextInputType? keyboardType,
     FocusNode? focusNode,
-    // fillColor? fillColor,
     bool readonly = false,
     void Function(String)? onChanged,
     void Function(String?)? onSaved,
@@ -151,7 +149,7 @@ class Register extends StatelessWidget {
                       width: 10.w,
                     ),
                 itemCount: value.length));
-  //
+
 
 
   @override
