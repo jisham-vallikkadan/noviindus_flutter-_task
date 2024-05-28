@@ -94,7 +94,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
               TextStyle(
                 color: const Color(0xFFCACACA),
                 fontSize: 14.sp,
-                fontFamily: "Manrope",
                 fontWeight: FontWeight.w300,
                 // height: 0.12,
               ),
@@ -138,7 +137,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(
-                    color: Color(0XFFD0DAEA),
+                    color: Color(0XFFD9D9D9),
                   ))),
     );
   }

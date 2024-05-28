@@ -5,6 +5,7 @@ import 'package:noviindus_machine_test/presentation/common_widgets/custom_textfi
 import 'package:provider/provider.dart';
 
 import '../../../provider/Patient_provider.dart';
+import '../registation_screen/registration_screen.dart';
 
 class PatientListScreen extends StatefulWidget {
   const PatientListScreen({super.key});
@@ -29,14 +30,25 @@ class _PatientListScreenState extends State<PatientListScreen> {
         padding: const EdgeInsets.all(16.0),
         child: CustomButton(
           text: 'Register Now',
-          onPress: () {},
+          onPress: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RegisterPatient(),
+                ));
+          },
         ),
       ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        actions: const [Icon(Icons.calendar_today)],
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.notifications_none_outlined),
+          )
+        ],
       ),
       body: Consumer<PatientProvider>(builder: (context, patient, _) {
         return RefreshIndicator(
